@@ -1,12 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-<<<<<<< HEAD
 import { CommonModule, JsonPipe } from '@angular/common';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, computed, effect, inject, resource, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-=======
-import { JsonPipe } from '@angular/common';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, computed, effect, inject, resource, signal } from '@angular/core';
->>>>>>> d4a51d96695614ef683f298732d8da67c55430ee
 import { ERROR_LEVEL, LoggerService } from '@my-library';
 import { Unsubscribable } from 'rxjs';
 import { NotificationService, NotificationType } from 'src/app/common-services';
@@ -14,11 +9,7 @@ import { Notification } from "src/app/layout";
 
 @Component({
   selector: 'app-demos',
-<<<<<<< HEAD
   imports: [JsonPipe, Notification, CommonModule, FormsModule],
-=======
-  imports: [JsonPipe, Notification],
->>>>>>> d4a51d96695614ef683f298732d8da67c55430ee
   templateUrl: './demos.html',
   styleUrl: './demos.css',
   // providers: [{ provide: LoggerService, useClass: LoggerService }, { provide: ERROR_LEVEL, useValue: 2 }, NotificationService]
