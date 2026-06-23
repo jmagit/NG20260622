@@ -33,7 +33,7 @@ module.exports = defineConfig([
       ],
       '@typescript-eslint/no-inferrable-types': 'off',
       '@typescript-eslint/no-unused-vars': ['error', { 'argsIgnorePattern': '^_' }],
-      '@angular-eslint/prefer-inject': 'off',
+      '@angular-eslint/prefer-inject': 'warn',
     },
   },
   {

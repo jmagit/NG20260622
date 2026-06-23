@@ -1,20 +1,21 @@
 import { JsonPipe } from '@angular/common';
-import { Component, computed, effect, resource, signal } from '@angular/core';
-import { LoggerService } from '@my-library';
+import { Component, computed, effect, inject, resource, signal } from '@angular/core';
+import { ERROR_LEVEL, LoggerService } from '@my-library';
 
 @Component({
   selector: 'app-demos',
-  imports: [ JsonPipe],
+  imports: [JsonPipe],
   templateUrl: './demos.html',
   styleUrl: './demos.css',
+  providers: [{ provide: LoggerService, useClass: LoggerService}, {provide: ERROR_LEVEL, useValue: 2 }]
 })
 export class Demos {
-
-  constructor(private logger: LoggerService) {
-    logger.error('esto es un error')
-    logger.warn('esto es un warn')
-    logger.info('esto es un info')
-    logger.log('esto es un log')
+  private logger = inject(LoggerService)
+  constructor() {
+    this.logger.error('esto es un error')
+    this.logger.warn('esto es un warn')
+    this.logger.info('esto es un info')
+    this.logger.log('esto es un log')
   }
 
   // ejemplo de señales
