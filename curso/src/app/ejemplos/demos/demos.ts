@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { JsonPipe } from '@angular/common';
 import { Component, computed, effect, inject, resource, signal } from '@angular/core';
 import { ERROR_LEVEL, LoggerService } from '@my-library';
@@ -10,13 +11,13 @@ import { ERROR_LEVEL, LoggerService } from '@my-library';
   providers: [{ provide: LoggerService, useClass: LoggerService}, {provide: ERROR_LEVEL, useValue: 2 }]
 })
 export class Demos {
-  private logger = inject(LoggerService)
-  constructor() {
-    this.logger.error('esto es un error')
-    this.logger.warn('esto es un warn')
-    this.logger.info('esto es un info')
-    this.logger.log('esto es un log')
-  }
+  // private logger = inject(LoggerService)
+  // constructor() {
+  //   this.logger.error('esto es un error')
+  //   this.logger.warn('esto es un warn')
+  //   this.logger.info('esto es un info')
+  //   this.logger.log('esto es un log')
+  // }
 
   // ejemplo de señales
   // readonly conSignal = signal(0)
