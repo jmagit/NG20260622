@@ -106,7 +106,8 @@
 </p>
 </app-card>
 
-<app-form-buttons send-text="saluda" (send)="saluda()" cancel-text="despide" (cancel)="despide()" />
+<app-form-buttons send-text="saluda" (send)="saluda()" cancel-text="despide" (cancel)="despide()"
+  (delete)="cambia()" delete-confirm-text="¿Seguro?" />
 
 <!-- Ejemplo de servicios
 <app-notification />
