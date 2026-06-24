@@ -1,3 +1,58 @@
+<h1>Hola {{ nombre() }}</h1>
+
+<p>
+  <input type="text" [(ngModel)]="nombre" />
+  <input type="button" value="saluda" (click)="saluda()" />
+  <input type="button" value="despide" (click)="despide()" />
+  <input type="button" value="di algo" (click)="di('algo')" />
+  <input type="button" value="cambia" (click)="cambia()" />
+</p>
+
+<p [textContent]="resultado()">Esto se pierde</p>
+<p [innerHTML]="resultado()">Esto se pierde</p>
+
+<p [hidden]="!visible()">Ahora me ves</p>
+@if (visible()) {
+  <p>Ahora existo</p>
+}
+
+<p [class]="estetica()">
+  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Earum exercitationem deleniti corrupti
+  iusto aperiam, error a ea, quas enim in sit nobis molestias aliquam eos, ab nisi. Quasi, ratione
+  quo.
+</p>
+<p [class.semi-invisible]="!visible()">Ahora me ves bien</p>
+
+<p><b>Fecha: </b> {{ fecha }} <input type="date" [(ngModel)]="fecha" /></p>
+
+<p>
+  <b>Calcula: </b> 2 + {{ +idProvincia() }} = {{ 2 + +idProvincia() }} =
+  {{ calcula(2, +idProvincia()) }}
+</p>
+
+<ul>
+  @for (item of listado(); track item.id) {
+    <li [style.background-color]="$odd ? 'lightskyblue' : 'lightcyan'">
+      {{ item.nombre }} ({{ item.id }}) [Elemento {{ $index + 1 }} de {{ $count }}]
+    </li>
+  } @empty {
+    <li>No hay provincias que mostrar</li>
+  }
+</ul>
+<p><b>Total:</b> <output [textContent]="total()"></output>
+
+<p>
+  <select [(ngModel)]="idProvincia">
+    <option value="">--Elige opción--</option>
+    @for (p of listado(); track p.id) {
+      <option [value]="p.id">{{ p.nombre }}</option>
+    }
+  </select>
+  Seleccionado: {{idProvincia()}}
+  <input type="text" value="Tabarnia" #txtProvincia >
+  <button type="button" (click)="add(txtProvincia.value)">add</button>
+</p>
+
 <!-- Ejemplo de servicios
 <app-notification />
 <p>

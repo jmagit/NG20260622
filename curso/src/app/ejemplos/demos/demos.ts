@@ -41,11 +41,11 @@ export class Demos {
   readonly estetica = signal({ importante: true, error: false, urgente: true})
 
   saluda() {
-    this.resultado.set(`Hola ${this.nombre}`)
+    this.resultado.set(`Hola ${this.nombre()}`)
   }
 
   despide() {
-    this.resultado.set(`Adios ${this.nombre}`)
+    this.resultado.set(`Adios ${this.nombre()}`)
   }
 
   di(algo: string) {
@@ -62,7 +62,7 @@ export class Demos {
   }
 
   add(provincia: string) {
-    const id = this.listado()[this.listado().length].id + 1
+    const id = this.listado()[this.listado().length - 1].id + 1
     this.listado.update(value => [...value, { id, nombre: provincia}])
     this.idProvincia.set(id)
   }
