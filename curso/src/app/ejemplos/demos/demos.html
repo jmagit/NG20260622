@@ -1,4 +1,4 @@
-<h1>Hola {{ nombre() }}</h1>
+<h1>Hola {{ nombre() | striptags | elipsis:10 | uppercase }}</h1>
 
 <p>
   <input type="text" [(ngModel)]="nombre" />
@@ -23,17 +23,18 @@
 </p>
 <p [class.semi-invisible]="!visible()">Ahora me ves bien</p>
 
-<p><b>Fecha: </b> {{ fecha }} <input type="date" [(ngModel)]="fecha" /></p>
+<p><b>Fecha: </b> {{ fecha | date:'dd/MMMM/yyyy' }} <input type="date" [(ngModel)]="Fecha" /></p>
 
 <p>
   <b>Calcula: </b> 2 + {{ +idProvincia() }} = {{ 2 + +idProvincia() }} =
-  {{ calcula(2, +idProvincia()) }}
+  <!-- {{ calcula(2, +idProvincia()) | currency:'EUR':'symbol':'1.2-2' }} -->
+  {{ calcula | exec:2:+idProvincia() | currency:'EUR':'symbol':'1.2-2' }}
 </p>
 
 <ul>
-  @for (item of listado(); track item.id) {
+  @for (item of listado() | slice:-5; track item.id) {
     <li [style.background-color]="$odd ? 'lightskyblue' : 'lightcyan'">
-      {{ item.nombre }} ({{ item.id }}) [Elemento {{ $index + 1 }} de {{ $count }}]
+      {{ item.nombre | titlecase }} ({{ item.id }}) [Elemento {{ $index + 1 }} de {{ $count }}]
     </li>
   } @empty {
     <li>No hay provincias que mostrar</li>
@@ -45,13 +46,25 @@
   <select [(ngModel)]="idProvincia">
     <option value="">--Elige opción--</option>
     @for (p of listado(); track p.id) {
-      <option [value]="p.id">{{ p.nombre }}</option>
+      <option [value]="p.id">{{ p.nombre | capitalize }}</option>
     }
   </select>
   Seleccionado: {{idProvincia()}}
   <input type="text" value="Tabarnia" #txtProvincia >
   <button type="button" (click)="add(txtProvincia.value)">add</button>
 </p>
+
+<my-sizer [(size)]="fontSize" />
+
+<app-card [header]="'Depuración de ' + nombre()">
+<p [style.font-size.px]="fontSize()">
+  {{ listado() | json }}
+</p>
+</app-card>
+
+<app-form-buttons send-text="saluda" (send)="saluda()" cancel-text="despide" (cancel)="despide()" />
+
+<app-grafico-svg />
 
 <!-- Ejemplo de servicios
 <app-notification />

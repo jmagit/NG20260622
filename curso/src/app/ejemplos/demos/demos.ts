@@ -2,14 +2,18 @@
 import { CommonModule, JsonPipe } from '@angular/common';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, computed, effect, inject, resource, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ERROR_LEVEL, LoggerService } from '@my-library';
+import { CapitalizePipe, ElipsisPipe, ERROR_LEVEL, ExecPipe, LoggerService, Sizer, StripTagsPipe } from '@my-library';
 import { Unsubscribable } from 'rxjs';
+import { Card, FormButtons } from 'src/app/common-component';
 import { NotificationService, NotificationType } from 'src/app/common-services';
 import { Notification } from "src/app/layout";
+import GraficoSvg from '../grafico-svg/grafico-svg';
 
 @Component({
   selector: 'app-demos',
-  imports: [JsonPipe, Notification, CommonModule, FormsModule],
+  imports: [JsonPipe, Notification, CommonModule, FormsModule,
+    ElipsisPipe, StripTagsPipe, CapitalizePipe, ExecPipe,
+    Card, FormButtons, Sizer, GraficoSvg, ],
   templateUrl: './demos.html',
   styleUrl: './demos.css',
   // providers: [{ provide: LoggerService, useClass: LoggerService }, { provide: ERROR_LEVEL, useValue: 2 }, NotificationService]
@@ -57,7 +61,14 @@ export class Demos {
     this.estetica.update(value => ({ ... value, importante: !value.importante, error: !value.error }))
   }
 
+  cont = 0
+  constructor() {
+    this.calcula = this.calcula.bind(this)
+  }
+
   calcula(a: number, b: number) {
+    this.logger.log(`${++this.cont} cálculos`)
+    // this.logger.log((++this.cont?'x':'y') + ' cálculos')
     return a + b
   }
 
@@ -93,7 +104,7 @@ export class Demos {
   //   }
   // }
 
-  // private logger = inject(LoggerService)
+  private logger = inject(LoggerService)
   // constructor() {
   //   this.logger.error('esto es un error')
   //   this.logger.warn('esto es un warn')
