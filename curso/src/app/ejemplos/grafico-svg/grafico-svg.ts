@@ -13,4 +13,8 @@ export default class GraficoSvg {
     const b = Math.floor(Math.random() * 256);
     this.fillColor.set(`rgb(${r}, ${g}, ${b})`);
   }
+
+  ngOnInit() {
+    this.changeColor()
+  }
 }

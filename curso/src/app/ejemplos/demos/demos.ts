@@ -7,13 +7,13 @@ import { Unsubscribable } from 'rxjs';
 import { Card, FormButtons } from 'src/app/common-component';
 import { NotificationService, NotificationType } from 'src/app/common-services';
 import { Notification } from "src/app/layout";
-import GraficoSvg from '../grafico-svg/grafico-svg';
+import { Calculadora, SimboloDecimal } from '../calculadora/calculadora';
 
 @Component({
   selector: 'app-demos',
   imports: [JsonPipe, Notification, CommonModule, FormsModule,
     ElipsisPipe, StripTagsPipe, CapitalizePipe, ExecPipe,
-    Card, FormButtons, Sizer, GraficoSvg, ],
+    Card, FormButtons, Sizer, Calculadora, ],
   templateUrl: './demos.html',
   styleUrl: './demos.css',
   // providers: [{ provide: LoggerService, useClass: LoggerService }, { provide: ERROR_LEVEL, useValue: 2 }, NotificationService]
@@ -154,4 +154,29 @@ export class Demos {
   //   })
   // })
 
+
+  // Ejemplo de Calculadora
+
+  idiomas = signal([
+    { codigo: 'en-US', region: 'USA' },
+    { codigo: 'es', region: 'España' },
+    { codigo: 'pt', region: 'Portugal' },
+  ]).asReadonly();
+  idioma = signal(this.idiomas()[0].codigo);
+  calculos = signal<Calculo[]>([]);
+  valCalculadora = signal(666);
+  simbolo: SimboloDecimal = ','
+
+  ponResultado(origen: string, valor: number) {
+    this.calculos.update(value => [ ...value, {
+      pos: this.calculos.length + 1,
+      origen,
+      valor: +valor
+    }]);
+  }
+}
+interface Calculo {
+  pos: number
+  origen: string
+  valor: number
 }

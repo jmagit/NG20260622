@@ -1,11 +1,16 @@
 import { Routes } from '@angular/router';
 import { Home, PageNotFound } from './layout';
-import { Demos } from './ejemplos';
+import { Calculadora, Demos } from './ejemplos';
+import Dashboard from './ejemplos/dashboard/dashboard';
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', component: Home },
   { path: 'inicio', component: Home },
   { path: 'demos', component: Demos },
+  { path: 'chisme/de/hacer/numeros', component: Calculadora, title: 'Calculadora' },
+  // { path: 'formulario', component: Formulario, title: 'Ejemplo formularios' },
+  // { path: 'dashboard', loadComponent: () => import('./ejemplos/dashboard/dashboard') },
+  { path: 'dashboard', component: Dashboard },
 
   { path: '404.html', component: PageNotFound },
   { path: '**', component: PageNotFound },
@@ -15,6 +20,8 @@ export function generaMenu(): Option[] {
   return [
     { texto: 'Inicio', icono: 'fa-solid fa-house', path: '/inicio', visible: true },
     { texto: 'Demos', icono: 'fa-solid fa-person-chalkboard', path: '/demos', visible: true },
+    { texto: 'Calculadora', icono: 'fa-solid fa-calculator', path: '/chisme/de/hacer/numeros', visible: true },
+    { texto: 'Dashboard', icono: 'fa-solid fa-table-columns', path: 'dashboard', visible: true, },
     { texto: 'Falla', icono: 'fa-solid fa-ban', path: '/desconocido', visible: true },
   ]
 }
