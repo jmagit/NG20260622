@@ -1,9 +1,11 @@
-import { UpperCasePipe } from '@angular/common';
+import { JsonPipe, UpperCasePipe } from '@angular/common';
+import { HttpContext } from '@angular/common/http';
 import { Component, inject, Service, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ErrorMessagePipe, NIFNIEValidator, NotblankValidator, TypeValidator, UppercaseValidator } from '@my-library';
 import { NotificationService } from 'src/app/common-services';
 import { RESTDAOService } from 'src/app/core';
+import { AUTH_REQUIRED } from 'src/app/security';
 
 type Mode = 'add' | 'edit'
 
@@ -24,7 +26,13 @@ const INIT_VALUE: Persona = {
 @Service()
 class PersonasDAOService extends RESTDAOService<Persona, number> {
   constructor() {
-    super('personas')
+    super('personas', { context: new HttpContext().set(AUTH_REQUIRED, true) })
+  }
+}
+@Service()
+class LibrosDAOService extends RESTDAOService<Persona, number> {
+  constructor() {
+    super('libros', { context: new HttpContext().set(AUTH_REQUIRED, true) })
   }
 }
 
@@ -81,11 +89,22 @@ class PersonaViewModelService {
 
 @Component({
   selector: 'app-formulario',
-  imports: [FormsModule, ErrorMessagePipe, TypeValidator, NIFNIEValidator, NotblankValidator, UpperCasePipe, UppercaseValidator],
+  imports: [FormsModule, ErrorMessagePipe, TypeValidator, NIFNIEValidator, NotblankValidator, UpperCasePipe, UppercaseValidator, JsonPipe],
   templateUrl: './formulario.html',
   styleUrl: './formulario.css',
 })
 export class Formulario {
   vm = inject(PersonaViewModelService)
 
+  dao = inject(LibrosDAOService)
+  private notify = inject(NotificationService)
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  listado = signal<any[]>([])
+  carga() {
+    this.dao.query().subscribe({
+      next: data => this.listado.set(data),
+      error: err => this.notify.add(err.message),
+    })
+  }
 }
