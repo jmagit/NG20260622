@@ -8,12 +8,13 @@ import { Card, FormButtons } from 'src/app/common-component';
 import { NotificationService, NotificationType } from 'src/app/common-services';
 import { Notification } from "src/app/layout";
 import { Calculadora, SimboloDecimal } from '../calculadora/calculadora';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-demos',
   imports: [JsonPipe, Notification, CommonModule, FormsModule,
     ElipsisPipe, StripTagsPipe, CapitalizePipe, ExecPipe,
-    Card, FormButtons, Sizer, Calculadora, ],
+    Card, FormButtons, Sizer, Calculadora, RouterLink],
   templateUrl: './demos.html',
   styleUrl: './demos.css',
   // providers: [{ provide: LoggerService, useClass: LoggerService }, { provide: ERROR_LEVEL, useValue: 2 }, NotificationService]

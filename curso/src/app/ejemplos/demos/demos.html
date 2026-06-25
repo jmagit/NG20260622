@@ -1,4 +1,9 @@
 <h1>Hola {{ nombre() | striptags | elipsis:10 | uppercase }}</h1>
+<ul>
+  <li><a routerLink="/inicio">inicio</a></li>
+  <li><a routerLink="inicio">local</a></li>
+  <li><a href="/inicio">mal</a></li>
+</ul>
 
 <div class="container theme-dark">
   <div class="row">

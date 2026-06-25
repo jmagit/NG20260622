@@ -1,5 +1,5 @@
-import { JsonPipe, UpperCasePipe } from '@angular/common';
-import { HttpContext } from '@angular/common/http';
+import { AsyncPipe, JsonPipe, UpperCasePipe } from '@angular/common';
+import { HttpContext, httpResource } from '@angular/common/http';
 import { Component, inject, Service, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ErrorMessagePipe, NIFNIEValidator, NotblankValidator, TypeValidator, UppercaseValidator } from '@my-library';
@@ -89,7 +89,8 @@ class PersonaViewModelService {
 
 @Component({
   selector: 'app-formulario',
-  imports: [FormsModule, ErrorMessagePipe, TypeValidator, NIFNIEValidator, NotblankValidator, UpperCasePipe, UppercaseValidator, JsonPipe],
+  imports: [FormsModule, ErrorMessagePipe, TypeValidator, NIFNIEValidator, NotblankValidator, UpperCasePipe, UppercaseValidator,
+    JsonPipe, AsyncPipe],
   templateUrl: './formulario.html',
   styleUrl: './formulario.css',
 })
@@ -107,4 +108,6 @@ export class Formulario {
       error: err => this.notify.add(err.message),
     })
   }
+  id = signal<number>(1)
+  readonly recurso = httpResource(() => `/api/peliculas/${this.id()}`)
 }
