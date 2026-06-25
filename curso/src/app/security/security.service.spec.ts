@@ -39,6 +39,7 @@ describe('AuthService', () => {
     service = TestBed.inject(AuthService);
     log = TestBed.inject(LoggerService);
     vi.spyOn(log, 'log');
+    vi.spyOn(log, 'error');
   });
 
   it('should be created', () => {

@@ -1,4 +1,4 @@
-import { AsyncPipe, JsonPipe, UpperCasePipe } from '@angular/common';
+import { JsonPipe } from '@angular/common';
 import { HttpContext, httpResource } from '@angular/common/http';
 import { Component, inject, Service, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -89,8 +89,8 @@ class PersonaViewModelService {
 
 @Component({
   selector: 'app-formulario',
-  imports: [FormsModule, ErrorMessagePipe, TypeValidator, NIFNIEValidator, NotblankValidator, UpperCasePipe, UppercaseValidator,
-    JsonPipe, AsyncPipe],
+  imports: [FormsModule, ErrorMessagePipe, TypeValidator, NIFNIEValidator, NotblankValidator, UppercaseValidator,
+    JsonPipe, ],
   templateUrl: './formulario.html',
   styleUrl: './formulario.css',
 })

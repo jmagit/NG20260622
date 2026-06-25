@@ -12,7 +12,7 @@ import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-demos',
-  imports: [JsonPipe, Notification, CommonModule, FormsModule,
+  imports: [JsonPipe, /*Notification,*/ CommonModule, FormsModule,
     ElipsisPipe, StripTagsPipe, CapitalizePipe, ExecPipe,
     Card, FormButtons, Sizer, Calculadora, RouterLink],
   templateUrl: './demos.html',
