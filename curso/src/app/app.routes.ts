@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { Home, PageNotFound } from './layout';
 import { Calculadora, Demos, Formulario } from './ejemplos';
 import Dashboard from './ejemplos/dashboard/dashboard';
+import { LoginForm, RegisterUser } from './security';
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', component: Home },
@@ -11,6 +12,9 @@ export const routes: Routes = [
   { path: 'formulario', component: Formulario, title: 'Ejemplo formularios' },
   // { path: 'dashboard', loadComponent: () => import('./ejemplos/dashboard/dashboard') },
   { path: 'dashboard', component: Dashboard },
+
+  { path: 'login', component: LoginForm },
+  { path: 'registro', component: RegisterUser },
 
   { path: '404.html', component: PageNotFound },
   { path: '**', component: PageNotFound },

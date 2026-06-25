@@ -6,10 +6,14 @@
 <form name="miForm" #miForm="ngForm">
   <div>
     <label for="id">código:</label>
+    @if(vm.Modo() === 'add') {
     <input type="number" id="id" name="id" [(ngModel)]="vm.Elemento().id" #id="ngModel"
       required min="0">
     <output class="error" [hidden]="!id.hasError('required') || miForm.pristine">Es obligatorio</output>
     <output class="error" [hidden]="!id.hasError('min') || miForm.pristine">Debe ser mayor o igual a cero</output>
+    } @else {
+      <output >{{vm.Elemento().id}}</output>
+    }
   </div>
   <div>
     <label for="nombre">nombre:</label>
