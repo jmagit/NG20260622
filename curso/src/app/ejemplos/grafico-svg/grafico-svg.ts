@@ -1,10 +1,10 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, OnInit } from '@angular/core';
 
 @Component({
     selector: 'app-grafico-svg',
     templateUrl: './grafico-svg.svg'
 })
-export default class GraficoSvg {
+export default class GraficoSvg implements OnInit {
   fillColor = signal('rgb(255, 0, 0)');
 
   changeColor() {

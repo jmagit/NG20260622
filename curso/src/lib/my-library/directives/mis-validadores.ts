@@ -119,7 +119,8 @@ export class TypeValidator implements Validator {
       const dom = this.elem.nativeElement;
       if (dom.validity) {
         // dom.checkValidity();
-        return dom.validity.typeMismatch || dom.validity.stepMismatch
+        return dom.validity.typeMismatch || dom.validity.stepMismatch ||
+          (dom.type.toLowerCase() !== 'number' && (dom.validity.rangeOverflow || dom.validity.rangeUnderflow)) // fechas
           ? { type: dom.validationMessage }
           : null;
       }

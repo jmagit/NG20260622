@@ -195,6 +195,7 @@ Añadir los atributos de la clase ContactosViewModelService:
   public readonly Elemento: WritableSignal<ContactoModel> = signal({ ...init_value });
   protected idOriginal?: number;
   protected listURL = '/contactos';
+  public readonly HOY = new Date().toISOString().substring(0, 10);
   //#endregion
 ```
 
@@ -520,7 +521,7 @@ Editar el fichero `src/app/contactos/tmpl-list.html` y sustituir el código por 
             <div class="row">
               <div class="col-md-2">
                 <img class="rounded-circle float-left" src="{{item.avatar ?? (item.sexo === 'H' ? '/images/user-not-found-male.png' : '/images/user-not-found-female.png') }}"
-                  alt="Foto de {{item.nombre}} {{item.apellidos}}" width="75" height="75">
+                  alt="Foto de {{item.nombre}} {{item.apellidos}}" width="75" height="75" (error)="VM.imageErrorHandler($event, item)">
               </div>
               <div class="col-md-10">
                 <a class="btn btn-link btn-lg px-0" routerLink="{{item.id}}/{{item.nombre}}-{{item.apellidos}}">
@@ -553,7 +554,7 @@ Editar el fichero `src/app/contactos/tmpl-view.html` y sustituir el código por 
       <div class="well well-sm">
           <div class="row">
               <div class="col-sm-6 col-md-4">
-                  <img src="{{VM.Elemento().avatar}}" (error)="VM.imageErrorHandler($event, VM.Elemento)"
+                  <img src="{{VM.Elemento().avatar}}" (error)="VM.imageErrorHandler($event, VM.Elemento())"
                         alt="Foto de {{VM.Elemento().nombre}} {{VM.Elemento().apellidos}}" class="rounded" />
               </div>
               <div class="col-sm-6 col-md-8">
@@ -655,7 +656,7 @@ Editar el fichero `src/app/contactos/tmpl-form.html` y sustituir el código por 
   </div>
   <div class="form-floating col-md-3 col-lg-2">
     <input class="form-control" [class.is-invalid]="nacimiento.invalid" type="date" name="nacimiento" id="nacimiento"
-       [(ngModel)]="VM.Elemento().nacimiento" #nacimiento="ngModel" placeholder=" ">
+       [(ngModel)]="VM.Elemento().nacimiento" #nacimiento="ngModel" placeholder=" " [max]="VM.HOY">
     <label class="form-label" for="nacimiento">F. Nacimiento:</label>
     <output class="invalid-feedback" [hidden]="nacimiento.valid">{{nacimiento.errors | errormsg}}</output>
   </div>
