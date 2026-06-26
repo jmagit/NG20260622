@@ -34,7 +34,16 @@ npm install -g @angular/cli
 ng version
 ```
 
-## Servidor REST (local)
+## Servidor REST (local sin control de versiones)
+
+```sh
+git clone add https://github.com/jmagit/MOCKWebServer.git MOCKWebServer
+cd MOCKWebServer
+npm i
+npm start
+```
+
+## Servidor REST (local bajo control de versiones)
 
 ```sh
 git submodule add https://github.com/jmagit/MOCKWebServer.git MOCKWebServer
