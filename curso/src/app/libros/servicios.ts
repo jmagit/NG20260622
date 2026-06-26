@@ -5,68 +5,38 @@ import { LoggerService } from '@my-library';
 import { Observable } from 'rxjs';
 import { NotificationService, NavigationService, WindowService } from '../common-services';
 import { ModoCRUD, RESTDAOService } from '../core';
-import { AuthService } from '../security';
-import { HttpErrorResponse } from '@angular/common/http';
+import { AUTH_REQUIRED, AuthService } from '../security';
+import { HttpContext, HttpErrorResponse } from '@angular/common/http';
 
 // Versión interface
-export interface ContactoModel {
+export interface LibroModel {
   [index: string]: any;
-  id?: number
-  tratamiento?: string
-  nombre: string
-  apellidos?: string
-  telefono?: string
-  email?: string
-  sexo?: string
-  nacimiento?: string
-  avatar?: string
-  conflictivo?: boolean
-  icono?: string
-}
-
-// Versión clase
-export class Contacto implements ContactoModel {
-  [index: string]: any;
-  constructor(
-    public id: number = 0,
-    public nombre: string,
-    public tratamiento?: string,
-    public apellidos?: string,
-    public telefono?: string,
-    public email?: string,
-    public sexo: string = 'H',
-    public nacimiento?: string,
-    public avatar?: string,
-    public conflictivo: boolean = false,
-  ) { }
+  idLibro: number
+  titulo: string
+  autor?: string
+  pais?: string
+  fecha?: number
+  paginas?: number
+  wiki?: string
 }
 
 // Constante para la inicialización (Signal Forms)
-export const init_value: ContactoModel = {
-  id: 0,
-  // tratamiento: 'Sr.',
-  nombre: '',
-  // apellidos: '',
-  // telefono: '',
-  // email: '',
-  sexo: 'H',
-  // nacimiento: '',
-  // avatar: '',
-  conflictivo: false,
-  // icono: '',
+export const init_value: LibroModel = {
+  idLibro: 0,
+  titulo: '',
 }
 
 @Injectable({
   providedIn: 'root'
 })
-export class ContactosDAOService extends RESTDAOService<ContactoModel, number> {
+export class LibrosDAOService extends RESTDAOService<LibroModel, number> {
   constructor() {
-    super('contactos');
+    super('libros', { context: new HttpContext().set(AUTH_REQUIRED, true) });
   }
 
-  override page(page: number, rows: number = 20): Observable<{ page: number, pages: number, rows: number, list: ContactoModel[] }> {
+  override page(page: number, rows: number = 20): Observable<{ page: number, pages: number, rows: number, list: LibroModel[] }> {
     return new Observable(subscriber => {
-      const url = `${this.baseUrl}?_page=${page}&_rows=${rows}&_sort=nombre,apellidos`
+      const url = `${this.baseUrl}?_page=${page}&_rows=${rows}&_sort=titulo`
       this.http.get<any>(url, this.option).subscribe({
         next: data => subscriber.next({ page: data.number, pages: data.totalPages, rows: data.totalElements, list: data.content }),
         error: err => subscriber.error(err)
@@ -76,11 +46,11 @@ export class ContactosDAOService extends RESTDAOService<ContactoModel, number> {
 }
 
 @Service()
-export class ContactosViewModelService {
+export class LibrosViewModelService {
   //#region Inyección de dependencias
   protected readonly notify = inject(NotificationService);
   protected readonly logger = inject(LoggerService);
-  protected readonly dao = inject(ContactosDAOService);
+  protected readonly dao = inject(LibrosDAOService);
   protected readonly navigation = inject(NavigationService);
   protected readonly router = inject(Router);
   readonly auth = inject(AuthService);
@@ -88,13 +58,13 @@ export class ContactosViewModelService {
 
   //#region Estado
   public readonly Modo: WritableSignal<ModoCRUD> = signal('list');
-  public readonly Listado: WritableSignal<ContactoModel[]> = signal([]);
-  public readonly Elemento: WritableSignal<ContactoModel> = signal({ ...init_value });
+  public readonly Listado: WritableSignal<LibroModel[]> = signal([]);
+  public readonly Elemento: WritableSignal<LibroModel> = signal({ ...init_value });
   protected idOriginal?: number;
-  // protected listURL = '/contactos';
+  // protected listURL = '/libros';
   public readonly HOY = new Date().toISOString().substring(0, 10);
-  // protected get DomainModel(): ContactoModel { return this.Elemento() }
-  protected get DomainModel(): ContactoModel { return this.dao.blank2undefined(this.Elemento())}
+  // protected get DomainModel(): LibroModel { return this.Elemento() }
+  protected get DomainModel(): LibroModel { return this.dao.blank2undefined(this.Elemento())}
   //#endregion
 
   //#region Recuperar lista de elementos

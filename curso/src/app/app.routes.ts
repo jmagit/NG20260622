@@ -1,7 +1,7 @@
 import { Routes, UrlSegment } from '@angular/router';
 import { Home, PageNotFound } from './layout';
 import { Calculadora, Demos, Formulario } from './ejemplos';
-import { AuthCanActivate, AuthService, AuthWithRedirectCanActivate, LoginForm, RegisterUser } from './security';
+import { AuthCanActivate, AuthCanActivateChild, AuthService, AuthWithRedirectCanActivate, LoginForm, RegisterUser } from './security';
 
 export function graficoFiles(url: UrlSegment[]) {
   return url.length === 1 && url[0].path.endsWith('.svg') ? ({ consumed: url }) : null;
@@ -33,6 +33,7 @@ export const routes: Routes = [
 
   { path: 'contactos', loadChildren: () => import('./contactos/contactos-module').then(mod => mod.routes) },
   { path: 'alysia/baxendale', redirectTo: '/contactos/43' },
+  { path: 'libros', loadChildren: () => import('./libros/libros-module').then(mod => mod.routes), canActivateChild: [ AuthCanActivateChild ] },
 
 
   { path: 'login', component: LoginForm },
@@ -51,6 +52,7 @@ export function generaMenu(auth: AuthService): Option[] {
     { texto: 'Dashboard', icono: 'fa-solid fa-table-columns', path: '/dashboard', visible: auth.isInRoles('Empleados'), },
     { texto: 'SVG', icono: 'fa-solid fa-image', path: '/falso.svg', visible: true, },
     { texto: 'Contactos', icono: 'fa-solid fa-address-book', path: '/contactos', visible: true },
+    { texto: 'Libros', icono: 'fa-solid fa-book', path: '/libros', visible: auth.isInRoles('Empleados'), },
     { texto: 'Alysia', icono: 'fa-solid fa-address-book', path: '/alysia/baxendale', visible: true },
     {
       texto: 'config', icono: 'fa-solid fa-gears', visible: auth.isAuthenticated(), children: [
