@@ -39,6 +39,25 @@ export abstract class RESTDAOService<T, K> {
       })
     })
   }
+
+  blank2null(elemento: T) {
+    return this.clone(elemento, null)
+  }
+
+  blank2undefined(elemento: T) {
+    return this.clone(elemento, undefined)
+  }
+
+  private clone(elemento: T, sustituto: null | undefined) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const result: any = {...elemento}
+    for(const field in elemento) {
+      if(elemento[field] === '') {
+        result[field] = sustituto
+      }
+    }
+    return result
+  }
 }
 export class DAOServiceMock<T, K> extends RESTDAOService<T, K> {
   private readonly pk: string

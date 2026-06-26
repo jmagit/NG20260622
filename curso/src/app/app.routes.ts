@@ -1,7 +1,6 @@
 import { Routes, UrlSegment } from '@angular/router';
 import { Home, PageNotFound } from './layout';
 import { Calculadora, Demos, Formulario } from './ejemplos';
-import Dashboard from './ejemplos/dashboard/dashboard';
 import { AuthCanActivate, AuthService, AuthWithRedirectCanActivate, LoginForm, RegisterUser } from './security';
 
 export function graficoFiles(url: UrlSegment[]) {
@@ -29,8 +28,12 @@ export const routes: Routes = [
   // { path: 'dashboard', loadComponent: () => import('./ejemplos/dashboard/dashboard'), canActivate: [ AuthCanActivate] },
   // { path: 'dashboard', component: Dashboard },
 
-  { matcher: graficoFiles, loadComponent: () => import('./ejemplos/grafico-svg/grafico-svg'), canActivate: [AuthWithRedirectCanActivate('login')]},
-  { path: 'config', loadChildren: () => import('./config/config-module').then(mod => mod.routes), canActivate: [ AuthCanActivate]},
+  { matcher: graficoFiles, loadComponent: () => import('./ejemplos/grafico-svg/grafico-svg'), canActivate: [AuthWithRedirectCanActivate('login')] },
+  { path: 'config', loadChildren: () => import('./config/config-module').then(mod => mod.routes), canActivate: [AuthCanActivate] },
+
+  { path: 'contactos', loadChildren: () => import('./contactos/contactos-module').then(mod => mod.routes) },
+  { path: 'alysia/baxendale', redirectTo: '/contactos/43' },
+
 
   { path: 'login', component: LoginForm },
   { path: 'registro', component: RegisterUser },
@@ -44,9 +47,11 @@ export function generaMenu(auth: AuthService): Option[] {
     { texto: 'Inicio', icono: 'fa-solid fa-house', path: '/inicio', visible: true },
     { texto: 'Demos', icono: 'fa-solid fa-person-chalkboard', path: '/demos', visible: true },
     { texto: 'Calculadora', icono: 'fa-solid fa-calculator', path: '/chisme/de/hacer/numeros', visible: true },
-    { texto: 'Formulario', icono: 'fa-chalkboard-user', path: '/formulario', visible: true, },
+    { texto: 'Formulario', icono: 'fa-solid fa-chalkboard-user', path: '/formulario', visible: true, },
     { texto: 'Dashboard', icono: 'fa-solid fa-table-columns', path: '/dashboard', visible: auth.isInRoles('Empleados'), },
     { texto: 'SVG', icono: 'fa-solid fa-image', path: '/falso.svg', visible: true, },
+    { texto: 'Contactos', icono: 'fa-solid fa-address-book', path: '/contactos', visible: true },
+    { texto: 'Alysia', icono: 'fa-solid fa-address-book', path: '/alysia/baxendale', visible: true },
     {
       texto: 'config', icono: 'fa-solid fa-gears', visible: auth.isAuthenticated(), children: [
         { texto: 'config', icono: 'fa-solid fa-gears', path: '/config', visible: true },
