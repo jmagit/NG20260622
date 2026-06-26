@@ -570,19 +570,19 @@ Editar el fichero `src/app/contactos/tmpl-view.html` y sustituir el código por 
                       <i class="fas fa-gifts mr-2"></i>{{VM.Elemento().nacimiento | date:'dd/MM/yyyy'}}
                   </p>
                   <div class="btn-group">
-                      <button type="button" class="btn btn-primary">
-                          Social</button>
-                      <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                          <span class="caret"></span><span class="sr-only">Social</span>
-                      </button>
-                      <ul class="dropdown-menu" role="menu">
-                          <li><a href="#">Twitter</a></li>
-                          <li><a href="https://plus.google.com/+Jquery2dotnet/posts">Google +</a></li>
-                          <li><a href="https://www.facebook.com/jquery2dotnet">Facebook</a></li>
-                          <li class="divider"></li>
-                          <li><a href="#">Github</a></li>
-                      </ul>
-                      <input class="btn btn-secondary" type="button" value="Volver" (click)="VM.cancel()">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            <span class="caret"></span><span class="sr-only">Social</span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a class="dropdown-item" href="#" target="_blank">Twitter</a></li>
+                            <li><a class="dropdown-item" href="https://plus.google.com/+Jquery2dotnet/posts" target="_blank">Google +</a></li>
+                            <li><a class="dropdown-item" href="https://www.facebook.com/jquery2dotnet" target="_blank">Facebook</a></li>
+                            <li class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#" target="_blank">Github</a></li>
+                        </ul>
+                    </div>
+                    <input class="btn btn-secondary" type="button" value="Volver" (click)="VM.cancel()">
                   </div>
               </div>
           </div>
